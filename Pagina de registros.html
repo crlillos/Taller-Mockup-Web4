@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro y Login</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+h2 {
+    text-align: center;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background: #4facfe;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.error {
+    color: red;
+    font-size: 13px;
+}
+.success {
+    color: green;
+    text-align: center;
+}
+.link {
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+    color: blue;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- REGISTRO -->
+<div id="registro">
+    <h2>Registro</h2>
+    <input type="text" id="regNombre" placeholder="Nombre">
+    <input type="email" id="regEmail" placeholder="Email">
+    <input type="password" id="regPass" placeholder="Contraseña">
+    <button onclick="registrar()">Registrarse</button>
+    <div class="error" id="regError"></div>
+    <div class="success" id="regSuccess"></div>
+    <div class="link" onclick="mostrarLogin()">¿Ya tienes cuenta? Inicia sesión</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" style="display:none;">
+    <h2>Login</h2>
+    <input type="email" id="logEmail" placeholder="Email">
+    <input type="password" id="logPass" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+    <div class="error" id="logError"></div>
+    <div class="success" id="logSuccess"></div>
+    <div class="link" onclick="mostrarRegistro()">Crear cuenta</div>
+</div>
+
+</div>
+
+<script>
+
+// Cambiar vistas
+function mostrarLogin() {
+    document.getElementById("registro").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+function mostrarRegistro() {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("registro").style.display = "block";
+}
+
+// REGISTRO
+function registrar() {
+    let nombre = document.getElementById("regNombre").value.trim();
+    let email = document.getElementById("regEmail").value.trim();
+    let pass = document.getElementById("regPass").value;
+
+    let error = document.getElementById("regError");
+    let success = document.getElementById("regSuccess");
+
+    error.textContent = "";
+    success.textContent = "";
+
+    if (nombre === "" || email === "" || pass === "") {
+        error.textContent = "Todos los campos son obligatorios";
+        return;
+    }
+
+    if (pass.length < 6) {
+        error.textContent = "La contraseña debe tener al menos 6 caracteres";
+        return;
+    }
+
+    // Obtener usuarios
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    // Verificar si ya existe
+    let existe = usuarios.find(u => u.email === email);
+    if (existe) {
+        error.textContent = "El usuario ya existe";
+        return;
+    }
+
+    // Guardar usuario
+    usuarios.push({ nombre, email, pass });
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+    success.textContent = "Usuario registrado correctamente 🎉";
+
+    // Limpiar
+    document.getElementById("regNombre").value = "";
+    document.getElementById("regEmail").value = "";
+    document.getElementById("regPass").value = "";
+}
+
+// LOGIN
+function login() {
+    let email = document.getElementById("logEmail").value.trim();
+    let pass = document.getElementById("logPass").value;
+
+    let error = document.getElementById("logError");
+    let success = document.getElementById("logSuccess");
+
+    error.textContent = "";
+    success.textContent = "";
+
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    let usuario = usuarios.find(u => u.email === email && u.pass === pass);
+
+    if (!usuario) {
+        error.textContent = "Email o contraseña incorrectos";
+        return;
+    }
+
+    success.textContent = "Bienvenido " + usuario.nombre + " 👋";
+
+    // Guardar sesión (opcional)
+    localStorage.setItem("usuarioActivo", JSON.stringify(usuario));
+}
+
+</script>
+
+</body>
+</html>
