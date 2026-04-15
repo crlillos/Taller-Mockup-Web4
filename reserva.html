@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva | MockUp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Reserva tu cita</h2>
+
+    <form onsubmit="reservar(event)">
+
+        <input type="text" placeholder="Nombre completo" required>
+        <input type="tel" placeholder="Teléfono" required>
+        <input type="date" required>
+
+        <select required>
+            <option value="">Selecciona servicio</option>
+            <option>Diagnóstico Avanzado</option>
+            <option>Mantenimiento Premium</option>
+            <option>Frenos y Suspensión</option>
+            <option>Reparación Compleja</option>
+        </select>
+
+        <textarea placeholder="Describe el problema"></textarea>
+
+        <button type="submit" class="btn-hero">Confirmar cita</button>
+    </form>
+
+    <p id="reserva-msg"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
