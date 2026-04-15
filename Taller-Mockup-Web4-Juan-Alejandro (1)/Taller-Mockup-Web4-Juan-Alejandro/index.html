@@ -174,8 +174,8 @@
 
 <script src="script.js"></script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "firebase/app";
+  import { getFirestore, collection, addDoc, getDocs } from "firebase/analytics";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBHF9b1yQvd0qECUYgJPIaxWv0iN3qemjc",
@@ -194,6 +194,7 @@
       nombre: "Juan",
       edad: 18
     });
+  async function guardarEjemplo() {   
     await addDoc(collection(db, "usuarios"), {
     nombre: "Angel",
     edad: 24
