@@ -45,3 +45,21 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(".blog-card").forEach(card => {
     observer.observe(card);
 });
+
+function login(e) {
+    e.preventDefault();
+
+    document.getElementById("login-msg").textContent = "✔ Acceso correcto";
+
+    setTimeout(() => {
+        window.location.href = "reserva.html";
+    }, 1000);
+}
+
+function reservar(e) {
+    e.preventDefault();
+
+    document.getElementById("reserva-msg").textContent = "✔ Cita reservada correctamente";
+
+    e.target.reset();
+}
