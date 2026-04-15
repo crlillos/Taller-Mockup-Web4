@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock up | Taller Mecánico Premium</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">MOCK<span>UP</span></div>
+    <nav>
+        <button class="nav-btn active" data-target="inicio">Inicio</button>
+        <button class="nav-btn" data-target="servicios">Servicios</button>
+        <button class="nav-btn" data-target="presupuesto">Presupuesto</button>
+        <button class="nav-btn" data-target="blog">Blog</button>
+        <button class="nav-btn" data-target="contacto">Contacto</button>
+    </nav>
+</header>
+
+<main>
+
+    <section id="inicio" class="seccion activa">
+        <div class="hero">
+            <h1>Mecánica de verdad, sin sorpresas.</h1>
+            <p>Tu vehículo en manos expertas. Tecnología y transparencia.</p>
+        </div>
+    </section>
+
+    <section id="servicios" class="seccion">
+        <h2>Servicios</h2>
+
+        <div class="servicios-grid">
+            <div class="serv-card">
+                <h3>Diagnóstico Avanzado</h3>
+                <p>Utilizamos equipos de última generación para detectar fallos electrónicos y mecánicos con precisión.</p>
+            </div>
+
+            <div class="serv-card">
+                <h3>Mantenimiento Premium</h3>
+                <p>Cambios de aceite, filtros, revisión completa y puesta a punto para alargar la vida de tu vehículo.</p>
+            </div>
+
+            <div class="serv-card">
+                <h3>Frenos y Suspensión</h3>
+                <p>Revisión y sustitución de pastillas, discos, amortiguadores y sistemas de frenado.</p>
+            </div>
+
+            <div class="serv-card">
+                <h3>Reparaciones Complejas</h3>
+                <p>Embragues, distribución, culatas y reparaciones de motor con garantía oficial.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="presupuesto" class="seccion">
+        <h2>Calculadora de Presupuesto</h2>
+
+        <div class="calc-container">
+            <label>Tipo de servicio:</label>
+            <select id="servicio">
+                <option value="0">Selecciona un servicio</option>
+                <option value="50">Cambio de aceite – 50€</option>
+                <option value="120">Revisión completa – 120€</option>
+                <option value="200">Frenos (delanteros) – 200€</option>
+                <option value="350">Embrague – 350€</option>
+            </select>
+            <label>Horas de mano de obra:</label>
+            <input type="number" id="horas" min="0" value="0">
+
+            <label>Precio por hora (€):</label>
+            <input type="number" id="precioHora" min="0" value="40">
+
+            <button id="calcularBtn">Calcular presupuesto</button>
+
+            <div class="resultado">
+                Total estimado: <span id="total">0€</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="seccion">
+        <h2>Blog Técnico</h2>
+
+        <div class="blog-grid">
+
+            <article class="blog-card">
+                <img src="https://images.unsplash.com/photo-1581091870627-3b5c7f3c1d3a?w=1200&q=80" 
+                     alt="Cambio de aceite en taller" class="blog-img">
+
+                <h3>Guía técnica: Cómo realizamos un cambio de aceite profesional</h3>
+                <p>
+                    En nuestro taller seguimos un protocolo de 12 pasos que incluye vaciado completo, 
+                    sustituución del filtro, comprobación de residuos metálicos y verificación del estado 
+                    general del motor. Un cambio de aceite bien hecho puede prolongar la vida del motor 
+                    más de un 30%.
+                </p>
+
+                <p>
+                    Hemos preparado una guía detallada donde explicamos el proceso, los tipos de aceite 
+                    recomendados y los errores más comunes que vemos en vehículos mal mantenidos.
+                </p>
+
+                <a href="#" class="blog-link">Leer guía completa del cambio de aceite</a>
+            </article>
+
+            <article class="blog-card">
+                <img src="https://images.unsplash.com/photo-1625047509168-5b1cdbcdaadb?w=1200&q=80" 
+                     alt="Cambio de pastillas de freno" class="blog-img">
+
+                <h3>Pastillas de freno: Señales de desgaste y cómo las sustituimos</h3>
+                <p>
+                    El sistema de frenado es crítico para tu seguridad. Utilizamos herramientas de medición 
+                    de espesor, comprobación de temperatura y análisis del disco para determinar si es 
+                    necesaria la sustitución. Unas pastillas desgastadas pueden aumentar la distancia de 
+                    frenado hasta un 40%.
+                </p>
+
+                <p>
+                    Si quieres conocer el procedimiento exacto que seguimos para sustituir pastillas de freno 
+                    de forma segura y precisa, te dejamos nuestra guía completa.
+                </p>
+
+                <a href="#" class="blog-link">Ver guía de sustitución de pastillas de freno</a>
+            </article>
+
+            <article class="blog-card">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=80" 
+                     alt="Recambios de calidad" class="blog-img">
+
+                <h3>¿Por qué es importante usar recambios de calidad?</h3>
+                <p>
+                    La calidad de los componentes marca la diferencia entre un vehículo fiable y uno que 
+                    genera averías constantes. Te explicamos cómo seleccionamos nuestros recambios, qué 
+                    certificaciones deben cumplir y por qué no recomendamos piezas de baja calidad.
+                </p>
+
+                <a href="#" class="blog-link">Leer artículo</a>
+            </article>
+
+        </div>
+    </section>
+
+    <section id="contacto" class="seccion">
+        <h2>Contacto</h2>
+
+        <div class="contacto-box">
+            <p>📍 <strong>Dirección:</strong> Avenida de las prácticas 23, Sevilla</p>
+            <p>📞 <strong>Teléfono:</strong> 654 98****</p>
+            <p>📧 <strong>Email:</strong> Elpracticante@*****.es</p>
+
+            <p style="margin-top:15px;">Estamos disponibles de lunes a viernes de 9:00 a 19:00.  
+            También puedes escribirnos para solicitar una cita o resolver cualquier duda.</p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">MOCK<span>UP</span></div>
+        <p>Tu taller mecánico de confianza en Sevilla. Transparencia, calidad y tecnología al servicio de tu vehículo.</p>
+        <div class="social-links">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Mock Up. Todos los derechos reservados. | Diseñado en Sevilla</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_AUTH_DOMAIN",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_STORAGE_BUCKET",
+    messagingSenderId: "TU_SENDER_ID",
+    appId: "TU_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  async function guardarEjemplo() {
+    await addDoc(collection(db, "usuarios"), {
+      nombre: "Juan",
+      edad: 20
+    });
+    console.log("Dato guardado");
+  }
+  async function leerEjemplo() {
+    const querySnapshot = await getDocs(collection(db, "usuarios"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+  }
+  guardarEjemplo();
+  leerEjemplo();
+</script>
+
+</script>
+</body>
+</html>
