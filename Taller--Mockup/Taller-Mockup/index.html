@@ -174,16 +174,17 @@
 
 <script src="script.js"></script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "firebase/app";
+  import { getFirestore, collection, addDoc, getDocs } from "firebase/analytics";
 
   const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_SENDER_ID",
-    appId: "TU_APP_ID"
+    apiKey: "AIzaSyBHF9b1yQvd0qECUYgJPIaxWv0iN3qemjc",
+    authDomain: "taller-mockup-web4.firebaseapp.com",
+    projectId:"taller-mockup-web4",
+    storageBucket: "taller-mockup-web4.firebasestorage.app",
+    messagingSenderId: "782151136268",
+    appId: "1:782151136268:web:fc0f9e2fccb8fcbc19aa29",
+    measurementId: "G-HQDEGQVVH5"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -191,8 +192,13 @@
   async function guardarEjemplo() {
     await addDoc(collection(db, "usuarios"), {
       nombre: "Juan",
-      edad: 20
+      edad: 18
     });
+  async function guardarEjemplo() {   
+    await addDoc(collection(db, "usuarios"), {
+    nombre: "Angel",
+    edad: 24
+  });
     console.log("Dato guardado");
   }
   async function leerEjemplo() {
