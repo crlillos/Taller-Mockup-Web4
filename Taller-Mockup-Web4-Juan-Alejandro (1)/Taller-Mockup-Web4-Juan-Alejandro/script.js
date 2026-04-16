@@ -1,4 +1,3 @@
-
 const botonesNav = document.querySelectorAll('.nav-btn');
 const secciones = document.querySelectorAll('.seccion');
 
