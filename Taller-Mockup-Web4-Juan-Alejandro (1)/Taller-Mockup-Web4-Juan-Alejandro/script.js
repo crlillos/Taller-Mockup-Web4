@@ -47,7 +47,38 @@ document.querySelectorAll(".blog-card").forEach(card => {
 });
 
 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+ import { initializeApp } from "firebase/app";
+  import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
-const auth = getAuth();
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHF9b1yQvd0qECUYgJPIaxWv0iN3qemjc",
+    authDomain: "taller-mockup-web4.firebaseapp.com",
+    projectId:"taller-mockup-web4",
+    storageBucket: "taller-mockup-web4.firebasestorage.app",
+    messagingSenderId: "782151136268",
+    appId: "1:782151136268:web:fc0f9e2fccb8fcbc19aa29",
+    measurementId: "G-HQDEGQVVH5"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  async function guardarEjemplo() {
+    await addDoc(collection(db, "usuarios"), {
+      nombre: "Juan",
+      edad: 18
+    });
+  async function guardarEjemplo() {   
+    await addDoc(collection(db, "usuarios"), {
+    nombre: "Angel",
+    edad: 24
+  });
+    console.log("Dato guardado");
+  }
+  async function leerEjemplo() {
+    const querySnapshot = await getDocs(collection(db, "usuarios"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+  }
+  guardarEjemplo();
+  leerEjemplo();
