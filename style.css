@@ -393,3 +393,78 @@ footer {
     resize: none;
     height: 80px;
 }
+
+/* BOTÓN BASE MODERNO */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* BOTÓN PRINCIPAL (ACENTO) */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent), #ff784e);
+    color: white;
+    box-shadow: 0 5px 20px rgba(255, 87, 34, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 87, 34, 0.5);
+}
+
+/* EFECTO GLOW */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.btn-primary:hover::after {
+    left: 100%;
+}
+
+/* BOTÓN SECUNDARIO */
+.btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+}
+
+.btn-outline:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* BOTÓN SUAVE (glass style) */
+.btn-glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    color: white;
+    border: 1px solid var(--border);
+}
+
+.btn-glass:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* BOTÓN FULL WIDTH (para formularios como tu calculadora) */
+.btn-block {
+    width: 100%;
+}
