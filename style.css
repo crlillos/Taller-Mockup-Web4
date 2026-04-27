@@ -500,3 +500,7 @@ footer {
     color: var(--accent);
     box-shadow: 0 0 15px rgba(255, 87, 34, 0.3);
 }
+
+.btn-login:active {
+    transform: scale(0.97);
+}
