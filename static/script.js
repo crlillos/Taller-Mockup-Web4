@@ -1,46 +1,73 @@
+
 const botonesNav = document.querySelectorAll('.nav-btn');
 const secciones = document.querySelectorAll('.seccion');
 
-botonesNav.forEach(boton => {
-    boton.addEventListener('click', () => {
-        const destino = boton.dataset.target;
+if (botonesNav.length > 0 && secciones.length > 0) {
+    botonesNav.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const destino = boton.dataset.target;
+            
 
-        botonesNav.forEach(b => b.classList.remove('active'));
-        secciones.forEach(s => s.classList.remove('activa'));
+            if (!destino) return; 
 
-        boton.classList.add('active');
-        document.getElementById(destino).classList.add('activa');
+            botonesNav.forEach(b => b.classList.remove('active'));
+            secciones.forEach(s => s.classList.remove('activa'));
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+            boton.classList.add('active');
+            const targetElement = document.getElementById(destino);
+            if (targetElement) {
+                targetElement.classList.add('activa');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     });
-});
+}
 
-const header = document.getElementById('main-header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
+const calcularBtn = document.getElementById("calcularBtn");
+const horasInput = document.getElementById("horas");
+const horasDisplay = document.getElementById("horas-display");
 
-const sliderHoras = document.getElementById('horas');
-const displayHoras = document.getElementById('horas-display');
+if (horasInput && horasDisplay) {
+    horasInput.addEventListener("input", (e) => {
+        horasDisplay.textContent = e.target.value + " h";
+    });
+}
 
-sliderHoras.addEventListener('input', (e) => {
-    displayHoras.textContent = e.target.value + " h";
-});
+if (calcularBtn) {
+    calcularBtn.addEventListener("click", () => {
+        const servicioElement = document.getElementById("servicio");
+        const precioHoraElement = document.getElementById("precioHora");
 
-document.getElementById("calcularBtn").addEventListener("click", () => {
-    const servicio = parseFloat(document.getElementById("servicio").value);
-    const horas = parseFloat(document.getElementById("horas").value);
-    const precioHora = parseFloat(document.getElementById("precioHora").value);
+        if (!servicioElement || !horasInput || !precioHoraElement) return;
 
-    if (servicio === 0) {
-        alert("Por favor, selecciona un tipo de intervención primero.");
-        return;
-    }
+        const servicio = parseFloat(servicioElement.value);
+        const horas = parseFloat(horasInput.value);
+        const precioHora = parseFloat(precioHoraElement.value);
 
-    const total = servicio + (horas * precioHora);
-    document.getElementById("total").textContent = total.toFixed(2).replace('.', ',') + " €";
-});
+        if (servicio === 0) {
+            alert("Selecciona un servicio válido para calcular.");
+            return;
+        }
+
+        const total = servicio + (horas * precioHora);
+        document.getElementById("total").textContent = total.toFixed(2) + " €";
+    });
+}
+
+
+const blogCards = document.querySelectorAll(".blog-card");
+
+if (blogCards.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, { threshold: 0.2 });
+
+    blogCards.forEach(card => {
+        observer.observe(card);
+    });
+}

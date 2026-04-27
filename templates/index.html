@@ -16,6 +16,9 @@
         <button class="nav-btn" data-target="presupuesto">Presupuesto</button>
         <button class="nav-btn" data-target="blog">Blog</button>
         <button class="nav-btn" data-target="contacto">Contacto</button>
+        
+        <button class="nav-btn" onclick="window.location.href='/login'">Login</button>
+        <button class="nav-btn" style="background-color: #ff3b3b; color: white;" onclick="window.location.href='/reservas'">Reservar</button>
     </nav>
 </header>
 
@@ -29,7 +32,7 @@
                 <div class="stat"><span class="stat-number">4.9/5</span> Valoración Clientes</div>
                 <div class="stat"><span class="stat-number">100%</span> Garantía Oficial</div>
             </div>
-            <button class="btn-hero" onclick="document.querySelector('[data-target=\'contacto\']').click()">Solicitar Cita Ahora</button>
+            <button class="btn-hero" onclick="window.location.href='/reservas'">Solicitar Cita Ahora</button>
         </div>
 
         <div class="testimonios-preview">
@@ -228,7 +231,6 @@
             </div>
         </div>
     </section>
-
 </main>
 
 <footer>
