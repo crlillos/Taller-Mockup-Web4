@@ -457,3 +457,46 @@ footer {
 .btn-block {
     width: 100%;
 }
+/* ===== BOTONES ESPECÍFICOS ===== */
+
+/* LOGIN (discreto pero elegante) */
+.btn-login {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+.btn-login:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(255, 87, 34, 0.08);
+}
+
+
+/* RESERVA (llamativo principal) */
+.btn-reserva {
+    background: linear-gradient(135deg, var(--accent), #ff784e);
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 87, 34, 0.35);
+}
+
+.btn-reserva:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(255, 87, 34, 0.6);
+}
+
+
+/* SOLICITUD DE CITA (glass + glow suave) */
+.btn-cita {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    color: white;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.btn-cita:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.3);
+}
