@@ -55,6 +55,8 @@ nav .nav-btn {
     cursor: pointer;
     font-weight: 600;
     transition: 0.3s;
+    padding: 8px 15px;
+    border-radius: 6px;
 }
 
 nav .nav-btn.active,
@@ -63,7 +65,7 @@ nav .nav-btn:hover {
 }
 
 main {
-    flex: 1; /* Esto empuja el footer hacia abajo */
+    flex: 1;
     padding-top: 100px;
     max-width: 1200px;
     margin: 0 auto;
@@ -86,7 +88,6 @@ main {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- MEJORAS VISUALES EN TÍTULOS --- */
 h1 {
     font-size: 3.5rem;
     background: linear-gradient(to right, #ffffff, #888888);
@@ -112,7 +113,6 @@ h2::after {
     left: 0;
     border-radius: 2px;
 }
-/* ---------------------------------- */
 
 .hero {
     text-align: center;
@@ -155,7 +155,7 @@ h2::after {
     border-color: var(--accent);
 }
 
-.calc-container {
+.calc-container, .calc-dashboard {
     max-width: 450px;
     margin: 20px auto;
     padding: 35px;
@@ -165,7 +165,7 @@ h2::after {
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-.calc-container label {
+.calc-container label, .form-grupo label {
     display: block;
     margin-top: 15px;
     font-weight: bold;
@@ -173,7 +173,9 @@ h2::after {
 }
 
 .calc-container input,
-.calc-container select {
+.calc-container select,
+.form-grupo input,
+.form-grupo select {
     width: 100%;
     padding: 12px;
     margin-top: 8px;
@@ -186,23 +188,14 @@ h2::after {
 }
 
 .calc-container input:focus,
-.calc-container select:focus {
+.calc-container select:focus,
+.form-grupo input:focus,
+.form-grupo select:focus {
     outline: none;
     border-color: var(--accent);
 }
 
-#calcularBtn {
-    margin-top: 25px;
-}
-
-
-#calcularBtn:hover {
-    background: #ff784e;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
-}
-
-.resultado {
+.resultado, .calc-pantalla {
     margin-top: 25px;
     font-size: 1.4rem;
     font-weight: bold;
@@ -293,13 +286,12 @@ h2::after {
     line-height: 1.8;
 }
 
-/* --- ESTILOS DEL FOOTER --- */
 footer {
     background-color: #050505;
     border-top: 1px solid var(--border);
     padding: 60px 20px 20px;
     text-align: center;
-    margin-top: auto; /* Se empuja al fondo gracias al flex del body */
+    margin-top: auto;
 }
 
 .footer-content {
@@ -383,8 +375,7 @@ footer {
     height: 80px;
 }
 
-/* BOTÓN BASE MODERNO */
-.btn {
+.btn, .btn-hero, #calcularBtn {
     display: inline-block;
     padding: 14px 28px;
     border-radius: 10px;
@@ -397,22 +388,18 @@ footer {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-}
-
-/* BOTÓN PRINCIPAL (ACENTO) */
-.btn-primary {
     background: linear-gradient(135deg, var(--accent), #ff784e);
     color: white;
     box-shadow: 0 5px 20px rgba(255, 87, 34, 0.3);
+    margin-top: 15px;
 }
 
-.btn-primary:hover {
+.btn:hover, .btn-hero:hover, #calcularBtn:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(255, 87, 34, 0.5);
 }
 
-/* EFECTO GLOW */
-.btn-primary::after {
+.btn-primary::after, .btn-hero::after, #calcularBtn::after {
     content: '';
     position: absolute;
     top: 0;
@@ -423,11 +410,10 @@ footer {
     transition: 0.5s;
 }
 
-.btn-primary:hover::after {
+.btn-primary:hover::after, .btn-hero:hover::after, #calcularBtn:hover::after {
     left: 100%;
 }
 
-/* BOTÓN SECUNDARIO */
 .btn-outline {
     background: transparent;
     color: var(--accent);
@@ -440,7 +426,6 @@ footer {
     transform: translateY(-2px);
 }
 
-/* BOTÓN SUAVE (glass style) */
 .btn-glass {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(8px);
@@ -453,54 +438,62 @@ footer {
     color: var(--accent);
 }
 
-/* BOTÓN FULL WIDTH (para formularios como tu calculadora) */
 .btn-block {
     width: 100%;
 }
-/* ===== BOTONES ESPECÍFICOS ===== */
 
-/* LOGIN (discreto pero elegante) */
 .btn-login {
     background: transparent;
-    color: var(--text-main);
-    border: 1px solid var(--border);
+    color: white;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
 }
 
 .btn-login:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: #ff5722;
+    color: #ff5722;
     background: rgba(255, 87, 34, 0.08);
+    box-shadow: 0 0 10px rgba(255, 87, 34, 0.2);
 }
 
-
-/* RESERVA (llamativo principal) */
 .btn-reserva {
-    background: linear-gradient(135deg, var(--accent), #ff784e);
+    background: linear-gradient(135deg, #ff5722, #ff784e);
     color: white;
-    box-shadow: 0 8px 25px rgba(255, 87, 34, 0.35);
-}
-
-.btn-reserva:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 30px rgba(255, 87, 34, 0.6);
-}
-
-
-/* SOLICITUD DE CITA (glass + glow suave) */
-.btn-cita {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    color: white;
-    border: 1px solid var(--border);
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0.4);
+    border: none;
     position: relative;
 }
 
-.btn-cita:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    box-shadow: 0 0 15px rgba(255, 87, 34, 0.3);
+.btn-reserva::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff784e, #ff5722);
+    opacity: 0;
+    transition: 0.4s;
 }
 
-.btn-login:active {
-    transform: scale(0.97);
+.btn-reserva:hover::before {
+    opacity: 1;
+}
+
+.btn-reserva:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 0 30px rgba(255, 87, 34, 0.8);
+}
+
+.btn-cita {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-cita:hover {
+    border-color: #ff5722;
+    color: #ff5722;
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0.4);
+    transform: translateY(-3px);
 }
