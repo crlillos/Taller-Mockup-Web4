@@ -2,38 +2,41 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva | MockUp</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="login-body">
 
 <div class="form-container">
+    <div class="logo" style="margin-bottom: 25px;">MOCK<span>UP</span></div>
     <h2>Reserva tu cita</h2>
 
-    <form onsubmit="reservar(event)">
+    <form action="/reservas" method="POST">
+        <input type="text" name="nombre_cliente" placeholder="Nombre completo" required>
+        <input type="tel" name="telefono_cliente" placeholder="Teléfono" required>
+        <input type="date" name="fecha_cita" required>
 
-        <input type="text" placeholder="Nombre completo" required>
-        <input type="tel" placeholder="Teléfono" required>
-        <input type="date" required>
-
-        <select required>
+        <select name="tipo_servicio" required>
             <option value="">Selecciona servicio</option>
-            <option>Diagnóstico Avanzado</option>
-            <option>Mantenimiento Premium</option>
-            <option>Frenos y Suspensión</option>
-            <option>Reparación Compleja</option>
+            <option value="Diagnóstico Avanzado">Diagnóstico Avanzado</option>
+            <option value="Mantenimiento Premium">Mantenimiento Premium</option>
+            <option value="Frenos y Suspensión">Frenos y Suspensión</option>
+            <option value="Reparación Compleja">Reparación Compleja</option>
         </select>
 
-        <textarea placeholder="Describe el problema"></textarea>
+        <textarea name="descripcion_problema" placeholder="Describe el problema" required></textarea>
 
-       <button type="submit" class="btn btn-reserva btn-block">
-    Confirmar cita
-</button>
+        <button type="submit" class="btn btn-reserva btn-block">
+            Confirmar cita
+        </button>
     </form>
 
     <p id="reserva-msg"></p>
+    
+    <a href="/" class="volver-link">← Volver al inicio</a>
 </div>
 
-<script src="script.js"></script>
+<script src="/static/script.js"></script>
 </body>
 </html>
