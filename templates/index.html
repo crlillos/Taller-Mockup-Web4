@@ -6,7 +6,17 @@
     <title>Mock up | Taller Mecánico Premium</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="page-transition">
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id="toast-container">
+      {% for message in messages %}
+        <div class="toast show">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
 <header id="main-header">
     <div class="logo">MOCK<span>UP</span></div>
@@ -26,7 +36,13 @@
         <button class="nav-btn" data-target="blog">Blog</button>
         <button class="nav-btn" data-target="contacto">Contacto</button>
         
-        <button class="nav-btn" onclick="window.location.href='/login'">Login</button>
+        {% if session.get('user_id') %}
+            <button class="nav-btn" style="color: var(--accent); font-weight: bold;">{{ session.get('user_email').split('@')[0] }}</button>
+            <button class="nav-btn" onclick="window.location.href='/logout'">Salir</button>
+        {% else %}
+            <button class="nav-btn" onclick="window.location.href='/login'">Login</button>
+        {% endif %}
+
         <button class="nav-btn btn-reserva-nav" onclick="window.location.href='/reservas'">Reservar</button>
         
         <button id="theme-toggle" class="nav-btn theme-btn" aria-label="Cambiar tema">
@@ -48,104 +64,179 @@
 <main>
     <section id="inicio" class="seccion activa">
         <div class="hero">
-            <h1>Mecánica de verdad, sin sorpresas.</h1>
-            <p>Tu vehículo en manos expertas. Tecnología, rapidez y transparencia total.</p>
-            <div class="hero-stats">
+            <h1 class="reveal fade-up">Mecánica de verdad, sin sorpresas.</h1>
+            <p class="reveal fade-up delay-100">Tu vehículo en manos expertas. Tecnología, rapidez y transparencia total.</p>
+            <div class="hero-stats reveal zoom delay-200">
                 <div class="stat"><span class="stat-number">+15</span> Años de Experiencia</div>
                 <div class="stat"><span class="stat-number">4.9/5</span> Valoración Clientes</div>
                 <div class="stat"><span class="stat-number">100%</span> Garantía Oficial</div>
             </div>
-            <button class="btn-hero" onclick="window.location.href='/reservas'">Solicitar Cita Ahora</button>
+            <button class="btn-hero reveal fade-up delay-300" onclick="window.location.href='/reservas'">Solicitar Cita Ahora</button>
+        </div>
+
+        <div class="marcas-especializadas">
+            <h2 class="reveal fade-up">Especialistas en Marcas Premium</h2>
+            <div class="grid-marcas">
+                <span class="marca-badge reveal zoom delay-100">Audi</span>
+                <span class="marca-badge reveal zoom delay-200">BMW</span>
+                <span class="marca-badge reveal zoom delay-300">Mercedes-Benz</span>
+                <span class="marca-badge reveal zoom delay-100">Volkswagen</span>
+                <span class="marca-badge reveal zoom delay-200">Porsche</span>
+                <span class="marca-badge reveal zoom delay-300">Land Rover</span>
+            </div>
+        </div>
+
+        <div class="proceso-trabajo">
+            <h2 class="reveal fade-up">Cómo Trabajamos</h2>
+            <div class="grid-proceso">
+                <div class="proceso-card reveal fade-up delay-100">
+                    <div class="proceso-icon">1</div>
+                    <h3>Recepción y Diagnóstico</h3>
+                    <p>Analizamos tu vehículo con equipos de última generación para detectar cualquier anomalía con precisión.</p>
+                </div>
+                <div class="proceso-card reveal fade-up delay-200">
+                    <div class="proceso-icon">2</div>
+                    <h3>Presupuesto Cerrado</h3>
+                    <p>Te entregamos una valoración detallada y transparente. Sin sorpresas ni costes ocultos de última hora.</p>
+                </div>
+                <div class="proceso-card reveal fade-up delay-300">
+                    <div class="proceso-icon">3</div>
+                    <h3>Reparación y Entrega</h3>
+                    <p>Ejecutamos el trabajo con recambios originales y te devolvemos tu coche en perfectas condiciones.</p>
+                </div>
+            </div>
         </div>
 
         <div class="testimonios-preview">
-            <h2>Lo que dicen nuestros clientes</h2>
+            <h2 class="reveal fade-up">Lo que dicen nuestros clientes</h2>
             <div class="grid-testimonios">
-                <div class="testimonio-card">
+                <div class="testimonio-card reveal fade-left delay-100">
                     <div class="estrellas">⭐⭐⭐⭐⭐</div>
                     <p>"Me cobraron exactamente lo que decía el presupuesto. Cero sorpresas y el coche va finísimo. Mi nuevo taller de confianza."</p>
                     <strong>- Carlos R.</strong>
                 </div>
-                <div class="testimonio-card">
+                <div class="testimonio-card reveal fade-right delay-200">
                     <div class="estrellas">⭐⭐⭐⭐⭐</div>
                     <p>"Fui por un ruido raro que en otros talleres no encontraban. Le metieron la máquina de diagnosis y en 2 horas estaba solucionado."</p>
                     <strong>- Laura M.</strong>
                 </div>
             </div>
         </div>
+
+        <div class="faq-section">
+            <h2 class="reveal fade-up">Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item reveal fade-up delay-100">
+                    <h4>¿Disponéis de vehículo de sustitución?</h4>
+                    <p>Sí, contamos con una flota de vehículos de cortesía. Te recomendamos solicitarlo en el momento de pedir tu cita previa para garantizar disponibilidad.</p>
+                </div>
+                <div class="faq-item reveal fade-up delay-200">
+                    <h4>¿Las reparaciones tienen garantía?</h4>
+                    <p>Por supuesto. Todas nuestras intervenciones están respaldadas por una garantía por escrito que cubre tanto las piezas instaladas como la mano de obra.</p>
+                </div>
+                <div class="faq-item reveal fade-up delay-100">
+                    <h4>¿Puedo pasar la revisión oficial sin perder la garantía del fabricante?</h4>
+                    <p>Sí. Realizamos el mantenimiento siguiendo estrictamente las pautas del fabricante y sellamos tu libro de mantenimiento electrónico, conservando tu garantía oficial.</p>
+                </div>
+                <div class="faq-item reveal fade-up delay-200">
+                    <h4>¿Cuánto tardáis en hacer un diagnóstico?</h4>
+                    <p>La mayoría de los diagnósticos electrónicos se completan en menos de 2 horas. Te llamaremos inmediatamente después con los resultados y el presupuesto.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="servicios" class="seccion">
-        <h2>Nuestros Servicios</h2>
+        <h2 class="reveal fade-up">Nuestros Servicios</h2>
         <div class="servicios-grid">
-            <div class="serv-card">
-                <div class="serv-img-wrapper">
-                    <img src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Diagnóstico Avanzado" class="serv-img">
-                </div>
-                <div class="serv-card-content">
-                    <h3>Diagnóstico Avanzado</h3>
-                    <p>Equipos de última generación multimarca para detectar fallos electrónicos y mecánicos con precisión milimétrica.</p>
-                    <ul class="serv-lista">
-                        <li>Lectura de códigos OBD2</li>
-                        <li>Reseteo de centralita</li>
-                        <li>Análisis de gases</li>
-                    </ul>
+            <div class="serv-card reveal fade-up delay-100">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="serv-img-wrapper">
+                            <img src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Diagnóstico Avanzado" class="serv-img">
+                        </div>
+                        <h3 class="card-title-front">Diagnóstico Avanzado</h3>
+                    </div>
+                    <div class="card-back serv-card-content">
+                        <h3>Diagnóstico Avanzado</h3>
+                        <p>Equipos de última generación multimarca para detectar fallos electrónicos y mecánicos con precisión milimétrica.</p>
+                        <ul class="serv-lista">
+                            <li>Lectura de códigos OBD2</li>
+                            <li>Reseteo de centralita</li>
+                            <li>Análisis de gases</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             
-            <div class="serv-card">
-                <div class="serv-img-wrapper">
-                    <img src="https://images.pexels.com/photos/4489704/pexels-photo-4489704.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mantenimiento Premium" class="serv-img">
-                </div>
-                <div class="serv-card-content">
-                    <h3>Mantenimiento Premium</h3>
-                    <p>Sustitución de fluidos y chequeo de puntos vitales para alargar la vida útil del motor de tu vehículo al máximo.</p>
-                    <ul class="serv-lista">
-                        <li>Aceite y filtros</li>
-                        <li>Revisión Pre-ITV</li>
-                        <li>Líquido refrigerante</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="serv-card">
-                <div class="serv-img-wrapper">
-                    <img src="https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Frenos y Suspensión" class="serv-img">
-                </div>
-                <div class="serv-card-content">
-                    <h3>Frenos y Suspensión</h3>
-                    <p>Intervenciones en el sistema de seguridad activa del vehículo. Componentes de primera calidad para una respuesta inmediata.</p>
-                    <ul class="serv-lista">
-                        <li>Discos y pastillas</li>
-                        <li>Amortiguadores</li>
-                        <li>Líquido de frenos</li>
-                    </ul>
+            <div class="serv-card reveal fade-up delay-200">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="serv-img-wrapper">
+                            <img src="https://images.pexels.com/photos/4489704/pexels-photo-4489704.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mantenimiento Premium" class="serv-img">
+                        </div>
+                        <h3 class="card-title-front">Mantenimiento Premium</h3>
+                    </div>
+                    <div class="card-back serv-card-content">
+                        <h3>Mantenimiento Premium</h3>
+                        <p>Sustitución de fluidos y chequeo de puntos vitales para alargar la vida útil del motor de tu vehículo al máximo.</p>
+                        <ul class="serv-lista">
+                            <li>Aceite y filtros</li>
+                            <li>Revisión Pre-ITV</li>
+                            <li>Líquido refrigerante</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="serv-card">
-                <div class="serv-img-wrapper">
-                    <img src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Reparaciones Complejas" class="serv-img">
+            <div class="serv-card reveal fade-up delay-300">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="serv-img-wrapper">
+                            <img src="https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Frenos y Suspensión" class="serv-img">
+                        </div>
+                        <h3 class="card-title-front">Frenos y Suspensión</h3>
+                    </div>
+                    <div class="card-back serv-card-content">
+                        <h3>Frenos y Suspensión</h3>
+                        <p>Intervenciones en el sistema de seguridad activa del vehículo. Componentes de primera calidad para una respuesta inmediata.</p>
+                        <ul class="serv-lista">
+                            <li>Discos y pastillas</li>
+                            <li>Amortiguadores</li>
+                            <li>Líquido de frenos</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="serv-card-content">
-                    <h3>Reparaciones Complejas</h3>
-                    <p>Intervenciones profundas de motor con herramientas de precisión, recambios originales y garantía certificada.</p>
-                    <ul class="serv-lista">
-                        <li>Kit de distribución</li>
-                        <li>Sustitución de embrague</li>
-                        <li>Junta de culata</li>
-                    </ul>
+            </div>
+
+            <div class="serv-card reveal fade-up delay-400">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="serv-img-wrapper">
+                            <img src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Reparaciones Complejas" class="serv-img">
+                        </div>
+                        <h3 class="card-title-front">Reparaciones Complejas</h3>
+                    </div>
+                    <div class="card-back serv-card-content">
+                        <h3>Reparaciones Complejas</h3>
+                        <p>Intervenciones profundas de motor con herramientas de precisión, recambios originales y garantía certificada.</p>
+                        <ul class="serv-lista">
+                            <li>Kit de distribución</li>
+                            <li>Sustitución de embrague</li>
+                            <li>Junta de culata</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="presupuesto" class="seccion">
-        <h2>Calculadora Transparente</h2>
-        <p class="subtitle">Conoce al instante una estimación de tu factura.</p>
+        <h2 class="reveal fade-up">Calculadora Transparente</h2>
+        <p class="subtitle reveal fade-up delay-100">Conoce al instante una estimación de tu factura.</p>
         
         <div class="calc-dashboard">
-            <div class="calc-controles">
+            <div class="calc-controles reveal fade-left delay-200">
                 <div class="form-grupo">
                     <label>Servicio Requerido:</label>
                     <div class="select-wrapper">
@@ -173,7 +264,7 @@
                 <button id="calcularBtn" class="btn-hero" style="width: 100%; margin-top: 15px;">Generar Estimación</button>
             </div>
 
-            <div class="calc-pantalla">
+            <div class="calc-pantalla reveal fade-right delay-300">
                 <div class="pantalla-header">PRESUPUESTO TOTAL</div>
                 <div class="pantalla-cuerpo">
                     <span id="total">0,00 €</span>
@@ -184,51 +275,66 @@
     </section>
 
     <section id="blog" class="seccion">
-        <h2>Blog del Motor</h2>
-        <p class="subtitle">Noticias, guías y consejos de las mejores revistas del sector.</p>
+        <h2 class="reveal fade-up">Blog del Motor</h2>
+        <p class="subtitle reveal fade-up delay-100">Noticias, guías y consejos de las mejores revistas del sector.</p>
         <div class="blog-grid">
-            <article class="blog-card">
-                <div class="blog-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80" alt="Cambio de aceite" class="blog-img">
-                    <span class="blog-badge">Mantenimiento</span>
-                </div>
-                <div class="blog-content">
-                    <h3>¿Cada cuánto cambiar el aceite?</h3>
-                    <p>Descubre los plazos reales y por qué no debes estirar la vida útil del lubricante de tu motor.</p>
-                    <a href="https://www.autofacil.es/mantenimiento/cambiar-aceite-coche/184852.html" target="_blank" class="blog-link">Leer en Autofácil →</a>
-                </div>
-            </article>
-
-            <article class="blog-card">
-                <div class="blog-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1506015391300-415214828131?w=800&q=80" alt="Pastillas de freno" class="blog-img">
-                    <span class="blog-badge">Seguridad</span>
-                </div>
-                <div class="blog-content">
-                    <h3>Síntomas de frenos desgastados</h3>
-                    <p>Aprende a identificar ruidos y vibraciones antes de que sea demasiado tarde para tus discos.</p>
-                    <a href="https://blog.aurgi.com/pastillas-de-freno-desgastadas-los-6-sintomas-definitivos/" target="_blank" class="blog-link">Leer en Aurgi →</a>
+            <article class="blog-card reveal fade-up delay-100">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="blog-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80" alt="Cambio de aceite" class="blog-img">
+                            <span class="blog-badge">Mantenimiento</span>
+                        </div>
+                        <h3 class="card-title-front">¿Cada cuánto cambiar el aceite?</h3>
+                    </div>
+                    <div class="card-back blog-content">
+                        <h3>¿Cada cuánto cambiar el aceite?</h3>
+                        <p>Descubre los plazos reales y por qué no debes estirar la vida útil del lubricante de tu motor.</p>
+                        <a href="https://www.autofacil.es/mantenimiento/cambiar-aceite-coche/184852.html" target="_blank" class="blog-link">Leer en Autofácil →</a>
+                    </div>
                 </div>
             </article>
 
-            <article class="blog-card">
-                <div class="blog-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80" alt="Recambios" class="blog-img">
-                    <span class="blog-badge">Mecánica</span>
+            <article class="blog-card reveal fade-up delay-200">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="blog-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1506015391300-415214828131?w=800&q=80" alt="Pastillas de freno" class="blog-img">
+                            <span class="blog-badge">Seguridad</span>
+                        </div>
+                        <h3 class="card-title-front">Síntomas de frenos desgastados</h3>
+                    </div>
+                    <div class="card-back blog-content">
+                        <h3>Síntomas de frenos desgastados</h3>
+                        <p>Aprende a identificar ruidos y vibraciones antes de que sea demasiado tarde para tus discos.</p>
+                        <a href="https://blog.aurgi.com/pastillas-de-freno-desgastadas-los-6-sintomas-definitivos/" target="_blank" class="blog-link">Leer en Aurgi →</a>
+                    </div>
                 </div>
-                <div class="blog-content">
-                    <h3>El peligro de los recambios baratos</h3>
-                    <p>Los peligros ocultos de comprar piezas de dudosa procedencia en internet para tu vehículo.</p>
-                    <a href="https://vwaudiarrojo.com/cuidado-con-los-recambios-de-calidad-dudosa/" target="_blank" class="blog-link">Leer en VW Audi Arrojo →</a>
+            </article>
+
+            <article class="blog-card reveal fade-up delay-300">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="blog-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80" alt="Recambios" class="blog-img">
+                            <span class="blog-badge">Mecánica</span>
+                        </div>
+                        <h3 class="card-title-front">El peligro de los recambios baratos</h3>
+                    </div>
+                    <div class="card-back blog-content">
+                        <h3>El peligro de los recambios baratos</h3>
+                        <p>Los peligros ocultos de comprar piezas de dudosa procedencia en internet para tu vehículo.</p>
+                        <a href="https://vwaudiarrojo.com/cuidado-con-los-recambios-de-calidad-dudosa/" target="_blank" class="blog-link">Leer en VW Audi Arrojo →</a>
+                    </div>
                 </div>
             </article>
         </div>
     </section>
 
     <section id="contacto" class="seccion">
-        <h2>Contacto y Citas</h2>
+        <h2 class="reveal fade-up">Contacto y Citas</h2>
         <div class="contacto-wrapper">
-            <div class="contacto-box">
+            <div class="contacto-box reveal fade-left delay-100">
                 <h3>Información del Taller</h3>
                 <div class="info-item">
                     <span class="info-icon">
@@ -250,7 +356,7 @@
                 </div>
             </div>
             
-            <div class="formulario-caja">
+            <div class="formulario-caja reveal fade-right delay-200">
                 <h3>Escríbenos</h3>
                 <form id="form-rapido" onsubmit="event.preventDefault(); alert('¡Mensaje enviado con éxito! Te contactaremos en breve.'); this.reset();">
                     <input type="text" placeholder="Tu Nombre Completo" required>
@@ -265,7 +371,7 @@
 </main>
 
 <footer>
-    <div class="footer-content">
+    <div class="footer-content reveal fade-up">
         <div class="footer-logo">MOCK<span>UP</span></div>
         <p>Tu taller mecánico de confianza en Sevilla. Transparencia, calidad y tecnología al servicio de tu vehículo. Cuidamos de ti y de tu seguridad en la carretera.</p>
         <div class="social-links">

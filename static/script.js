@@ -1,3 +1,21 @@
+const scrollObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+const observeElements = () => {
+    document.querySelectorAll(".reveal").forEach(el => {
+        el.classList.remove("is-visible");
+        scrollObserver.observe(el);
+    });
+};
+
+document.addEventListener("DOMContentLoaded", observeElements);
+
 const botonesNav = document.querySelectorAll('.nav-btn:not(.theme-btn)');
 const secciones = document.querySelectorAll('.seccion');
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -21,8 +39,15 @@ if (botonesNav.length > 0 && secciones.length > 0) {
 
             boton.classList.add('active');
             const targetElement = document.getElementById(destino);
+            
             if (targetElement) {
                 targetElement.classList.add('activa');
+                setTimeout(() => {
+                    targetElement.querySelectorAll('.reveal').forEach(el => {
+                        el.classList.remove("is-visible");
+                        scrollObserver.observe(el);
+                    });
+                }, 50);
             }
 
             if (navMenu.classList.contains('open')) {
@@ -65,22 +90,6 @@ if (calcularBtn) {
     });
 }
 
-const blogCards = document.querySelectorAll(".blog-card");
-
-if (blogCards.length > 0) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
-        });
-    }, { threshold: 0.2 });
-
-    blogCards.forEach(card => {
-        observer.observe(card);
-    });
-}
-
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 
@@ -91,9 +100,9 @@ const savedTheme = localStorage.getItem('theme');
 
 if (savedTheme === 'light') {
     document.documentElement.setAttribute('data-theme', 'light');
-    themeIcon.innerHTML = moonIcon; 
+    if (themeIcon) themeIcon.innerHTML = moonIcon; 
 } else {
-    themeIcon.innerHTML = sunIcon;
+    if (themeIcon) themeIcon.innerHTML = sunIcon;
 }
 
 if (themeToggleBtn) {
@@ -109,5 +118,24 @@ if (themeToggleBtn) {
             localStorage.setItem('theme', 'light');
             themeIcon.innerHTML = moonIcon;
         }
+    });
+}
+
+const toasts = document.querySelectorAll('.toast');
+if (toasts.length > 0) {
+    setTimeout(() => {
+        toasts.forEach(toast => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        });
+    }, 4000);
+}
+
+const flipCards = document.querySelectorAll('.serv-card, .blog-card');
+if (flipCards.length > 0) {
+    flipCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
     });
 }
