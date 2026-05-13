@@ -7,7 +7,6 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 app = Flask(__name__)
-
 app.secret_key = 'taller_mockup_clave_segura_123'
 
 @app.route('/')
@@ -20,7 +19,7 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        usuarios_ref = db.collection('usuarios')
+        usuarios_ref = db.collection('Usuarios') 
         query = usuarios_ref.where('email', '==', email).where('password', '==', password).stream()
         
         usuario_encontrado = None
@@ -30,28 +29,49 @@ def login():
 
         if usuario_encontrado:
             session['user_id'] = usuario_encontrado['id']
-            session['user_email'] = usuario_encontrado['email']
+            session['user_email'] = usuario_encontrado.get('email', '')
+            session['rol'] = usuario_encontrado.get('Rol', 'cliente').lower()
+            
             flash("¡Sesión iniciada correctamente!")
-            return redirect(url_for('inicio'))
+            
+            if session['rol'] == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return redirect(url_for('inicio'))
         else:
             return render_template('login.html', error="Correo o contraseña incorrectos")
 
     return render_template('login.html')
 
+@app.route('/admin_dashboard')
+def admin_dashboard():
+    if session.get('rol') != 'admin':
+        flash("Acceso denegado. Área exclusiva de administración.")
+        return redirect(url_for('inicio'))
+        
+    citas_ref = db.collection('citas').stream()
+    todas_las_citas = []
+    for cita in citas_ref:
+        cita_data = cita.to_dict()
+        cita_data['id'] = cita.id
+        todas_las_citas.append(cita_data)
+        
+    return render_template('admin.html', citas=todas_las_citas)
+
 @app.route('/perfil')
 def perfil():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    
-    return f"""
-    <div style="font-family: sans-serif; text-align: center; padding-top: 50px;">
-        <h1>¡Hola, {session['user_email']}!</h1>
-        <p>Has entrado correctamente a tu zona privada.</p>
-        <a href="/logout" style="color: #ff5722; text-decoration: none; font-weight: bold;">Cerrar sesión</a>
-        <br><br>
-        <a href="/" style="color: #666;">Volver al taller</a>
-    </div>
-    """
+        
+    user_id = session['user_id']
+    citas_ref = db.collection('citas').where('user_id', '==', user_id).stream()
+    mis_citas = []
+    for cita in citas_ref:
+        cita_data = cita.to_dict()
+        cita_data['id'] = cita.id
+        mis_citas.append(cita_data)
+        
+    return render_template('perfil.html', citas=mis_citas)
 
 @app.route('/logout')
 def logout():
@@ -67,6 +87,8 @@ def reserva():
         fecha = request.form.get('fecha_cita')
         servicio = request.form.get('tipo_servicio')
         problema = request.form.get('descripcion_problema')
+        
+        user_id = session.get('user_id', 'invitado')
 
         db.collection('citas').add({
             'cliente': nombre,
@@ -74,7 +96,8 @@ def reserva():
             'fecha': fecha,
             'servicio': servicio,
             'problema': problema,
-            'estado': 'pendiente'
+            'estado': 'pendiente',
+            'user_id': user_id
         })
         flash("¡Reserva enviada con éxito! Te contactaremos en breve.")
         return redirect(url_for('inicio'))

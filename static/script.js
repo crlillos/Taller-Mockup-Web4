@@ -139,3 +139,21 @@ if (flipCards.length > 0) {
         });
     });
 }
+
+const botonesCompletar = document.querySelectorAll('.btn-completar');
+if (botonesCompletar.length > 0) {
+    botonesCompletar.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const fila = e.target.closest('tr');
+            fila.classList.toggle('completada');
+            
+            if (fila.classList.contains('completada')) {
+                e.target.textContent = 'Deshacer';
+                e.target.classList.add('deshacer');
+            } else {
+                e.target.textContent = 'Completar';
+                e.target.classList.remove('deshacer');
+            }
+        });
+    });
+}

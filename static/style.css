@@ -873,6 +873,43 @@ footer {
     box-shadow: 0 10px 25px rgba(255, 87, 34, 0.5);
 }
 
+.cita-row.completada {
+    opacity: 0.4;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .cita-row.completada {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cita-row.completada td:not(:last-child) {
+    text-decoration: line-through;
+}
+
+.btn-completar {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-completar:hover {
+    background: #45a049;
+    transform: scale(1.05);
+}
+
+.btn-completar.deshacer {
+    background: #f44336;
+}
+
+.btn-completar.deshacer:hover {
+    background: #da190b;
+}
+
 @media (max-width: 768px) {
     header {
         padding: 15px 20px;
