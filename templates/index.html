@@ -38,6 +38,13 @@
         
         {% if session.get('user_id') %}
             <button class="nav-btn" style="color: var(--accent); font-weight: bold;">{{ session.get('user_email').split('@')[0] }}</button>
+            
+            {% if session.get('rol') == 'admin' %}
+                <button class="nav-btn" style="border: 1px solid var(--accent);" onclick="window.location.href='/admin_dashboard'">Panel de Reservas</button>
+            {% else %}
+                <button class="nav-btn" onclick="window.location.href='/perfil'">Mis Reservas</button>
+            {% endif %}
+            
             <button class="nav-btn" onclick="window.location.href='/logout'">Salir</button>
         {% else %}
             <button class="nav-btn" onclick="window.location.href='/login'">Login</button>
