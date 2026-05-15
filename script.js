@@ -63,3 +63,29 @@ function reservar(e) {
 
     e.target.reset();
 }
+document.addEventListener("DOMContentLoaded", () => {
+
+    const contenedor = document.getElementById("contenedorMensajes");
+
+    if (contenedor && contenedor.children.length === 0) {
+        const bienvenida = document.createElement("div");
+        bienvenida.className = "mensaje-bot";
+        bienvenida.innerText =
+            "🚗 Hola, soy el asistente del taller. ¿En qué puedo ayudarte?";
+
+        contenedor.appendChild(bienvenida);
+    }
+});
+soporte_humano: {
+  mensaje: "Un asesor humano te contactará pronto.",
+  opciones: [
+    { texto: "Volver al inicio", siguiente_nodo: "inicio" }
+  ]
+},
+
+catalogo_laptops: {
+  mensaje: "Tenemos Lenovo, ASUS y HP.",
+  opciones: [
+    { texto: "Volver", siguiente_nodo: "productos" }
+  ]
+}
