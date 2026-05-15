@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | MockUp</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login-body">
+
+<div class="form-container">
+    <div class="logo" style="margin-bottom: 25px;">MOCK<span>UP</span></div>
+    <h2>Acceso Clientes</h2>
+
+    <!-- Cambio 1: Añadido action y method -->
+    <form action="/login" method="POST">
+        
+        <!-- Cambio 2: Añadido name="email" y name="password" -->
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+
+        <button type="submit" class="btn btn-login btn-block">
+            Iniciar sesión
+        </button>
+    </form>
+
+    {% if error %}
+    <p id="login-msg" style="color: red; margin-top: 10px;">{{ error }}</p>
+    {% endif %}
+    
+    <a href="/" class="volver-link">← Volver al inicio</a>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
