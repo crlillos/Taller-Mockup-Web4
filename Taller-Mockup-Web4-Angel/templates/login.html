@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | MockUp</title>
+
+    <!-- CSS CORRECTO PARA FLASK -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+
+<div class="form-container">
+    <div class="logo" style="margin-bottom: 25px;">MOCK<span>UP</span></div>
+    <h2>Acceso Clientes</h2>
+
+    <!-- FORMULARIO CORRECTO -->
+    <form action="/login" method="POST">
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+
+        <button type="submit" class="btn btn-login btn-block">
+            Iniciar sesión
+        </button>
+    </form>
+
+    {% if error %}
+    <p id="login-msg" style="color: red; margin-top: 10px;">{{ error }}</p>
+    {% endif %}
+    
+    <a href="/" class="volver-link">← Volver al inicio</a>
+</div>
+
+<!-- JS CORRECTO PARA MÓDULOS -->
+<script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="crud.js"></script>
+
+</body>
+</html>
