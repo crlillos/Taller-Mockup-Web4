@@ -279,7 +279,255 @@
         <p>&copy; 2026 Mock Up Motor. Todos los derechos reservados. | Desarrollado con pasión en Sevilla</p>
     </div>
 </footer>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>TallerBot</title>
 
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background:
+        radial-gradient(circle at top, #2b2b52, #121220);
+
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    /* CHAT */
+    #chat {
+      background: #1e1e2f;
+      border: 1px solid #2d2d44;
+      border-radius: 16px;
+      padding: 20px;
+      width: 420px;
+      min-height: 250px;
+      color: white;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      text-align: left;
+    }
+
+    .mensaje {
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    /* BOTONES */
+    #opciones {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #opciones button {
+      background: linear-gradient(135deg, #ff9800, #f57c00);
+      color: white;
+
+      border: none;
+      border-radius: 12px;
+
+      padding: 12px 16px;
+
+      font-size: 15px;
+      font-weight: 500;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+      box-shadow: 0 4px 10px rgba(255,152,0,0.25);
+    }
+
+    #opciones button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 6px 18px rgba(255,152,0,0.4);
+    }
+
+    #opciones button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>🔧 TallerBot</h1>
+
+    <div id="chat"></div>
+
+    <div id="opciones"></div>
+
+  </div>
+
+  <script>
+
+    // CHATBOT TALLER
+    const chatbot = {
+
+      chatbot_name: "TallerBot",
+
+      version: "1.0",
+
+      flow: {
+
+        inicio: {
+
+          mensaje:
+            "¡Hola! Bienvenido a nuestro taller mecánico. ¿Qué necesitas?",
+
+          opciones: [
+
+            {
+              texto: "Cambio de aceite",
+              siguiente_nodo: "aceite"
+            },
+
+            {
+              texto: "Revisión de frenos",
+              siguiente_nodo: "frenos"
+            },
+
+            {
+              texto: "Pedir cita",
+              siguiente_nodo: "cita"
+            }
+
+          ]
+        },
+
+        aceite: {
+
+          mensaje:
+            "Realizamos cambios de aceite y filtros para todo tipo de vehículos.",
+
+          opciones: [
+
+            {
+              texto: "Pedir cita",
+              siguiente_nodo: "cita"
+            },
+
+            {
+              texto: "Volver al inicio",
+              siguiente_nodo: "inicio"
+            }
+
+          ]
+        },
+
+        frenos: {
+
+          mensaje:
+            "Revisamos discos, pastillas y líquido de frenos para tu seguridad.",
+
+          opciones: [
+
+            {
+              texto: "Pedir cita",
+              siguiente_nodo: "cita"
+            },
+
+            {
+              texto: "Volver al inicio",
+              siguiente_nodo: "inicio"
+            }
+
+          ]
+        },
+
+        cita: {
+
+          mensaje:
+            "Puedes llamarnos al 600 123 123 o escribirnos por WhatsApp para reservar una cita.",
+
+          opciones: [
+
+            {
+              texto: "Menú principal",
+              siguiente_nodo: "inicio"
+            }
+
+          ]
+        }
+
+      }
+
+    };
+
+    const chat = document.getElementById("chat");
+    const opcionesDiv = document.getElementById("opciones");
+
+    let nodoActual = "inicio";
+
+    function renderNodo(nombreNodo) {
+
+      const nodo = chatbot.flow[nombreNodo];
+
+      // Mostrar mensaje
+      chat.innerHTML += `
+        <div class="mensaje">
+          <strong>${chatbot.chatbot_name}:</strong>
+          ${nodo.mensaje}
+        </div>
+      `;
+
+      // Limpiar botones
+      opcionesDiv.innerHTML = "";
+
+      // Crear botones
+      nodo.opciones.forEach(opcion => {
+
+        const btn = document.createElement("button");
+
+        btn.textContent = opcion.texto;
+
+        btn.onclick = () => {
+
+          // Mostrar respuesta usuario
+          chat.innerHTML += `
+            <div class="mensaje">
+              <strong>Tú:</strong>
+              ${opcion.texto}
+            </div>
+          `;
+
+          nodoActual = opcion.siguiente_nodo;
+
+          renderNodo(nodoActual);
+        };
+
+        opcionesDiv.appendChild(btn);
+
+      });
+
+    }
+
+    // INICIAR
+    renderNodo(nodoActual);
+
+  </script>
 <script src="script.js"></script>
 </body>
 </html>
