@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | MockUp</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-transition">
+
+<header id="main-header">
+    <div class="logo">MOCK<span>UP</span> <span>ADMIN</span></div>
+    <nav id="nav-menu">
+        <button class="nav-btn" onclick="window.location.href='/'">Ver Web</button>
+        <button class="nav-btn active">Gestionar Citas</button>
+        <button class="nav-btn" onclick="window.location.href='/logout'">Salir</button>
+    </nav>
+</header>
+
+<main style="padding-top: 120px; max-width: 1000px; margin: 0 auto;">
+    <h2 class="reveal is-visible">Gestión de Reservas</h2>
+
+    <div class="contacto-box reveal is-visible" style="width: 100%; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; color: var(--text-main); text-align: left;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--accent);">
+                    <th style="padding: 15px;">Cliente</th>
+                    <th style="padding: 15px;">Fecha</th>
+                    <th style="padding: 15px;">Servicio</th>
+                    <th style="padding: 15px;">Teléfono</th>
+                    <th style="padding: 15px;">Estado</th>
+                    <th style="padding: 15px; text-align: center;">Acción</th>
+                    <th style="padding: 15px; text-align: center;">Editar</th>
+                    <th style="padding: 15px; text-align: center;">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                <tr class="cita-row" style="border-bottom: 1px solid var(--border); transition: all 0.4s ease;">
+    <td style="padding: 15px;">{{ cita.cliente }}</td>
+    <td style="padding: 15px;">{{ cita.fecha }}</td>
+    <td style="padding: 15px;">{{ cita.servicio }}</td>
+    <td style="padding: 15px;">{{ cita.telefono }}</td>
+
+    <td style="padding: 15px;">
+        <span style="background: var(--accent); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">
+            {{ cita.estado }}
+        </span>
+    </td>
+
+    <td style="padding: 15px; text-align: center;">
+        <button class="btn-completar">Completar</button>
+    </td>
+
+    <td style="padding: 15px; text-align: center;">
+        <form action="/editar_cita/{{ cita.id }}" method="GET">
+            <button class="btn-editar" type="submit">Editar</button>
+        </form>
+    </td>
+
+    <td style="padding: 15px; text-align: center;">
+        <form action="/eliminar_cita/{{ cita.id }}" method="POST" onsubmit="return confirmarEliminar()">
+            <button class="btn-eliminar" type="submit">Eliminar</button>
+        </form>
+    </td>
+</tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Mock Up Motor | Panel de Control Privado</p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+</body>
+</html>
