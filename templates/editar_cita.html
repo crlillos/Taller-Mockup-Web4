@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cita</title>
+
+    <style>
+        body {
+            background: #0d0d0d;
+            color: var(--text-main, #fff);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: orange;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ddd;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #111;
+            color: white;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: orange;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: orange;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff9d00;
+            transform: scale(1.03);
+        }
+
+        .volver {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #aaa;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .volver:hover {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Editar Cita</h2>
+
+    <form action="/actualizar_cita/{{ cita.id }}" method="POST">
+
+        <label>Cliente:</label>
+        <input type="text" name="cliente" value="{{ cita.cliente }}" required>
+
+        <label>Fecha:</label>
+        <input type="date" name="fecha" value="{{ cita.fecha }}" required>
+
+        <label>Servicio:</label>
+        <input type="text" name="servicio" value="{{ cita.servicio }}" required>
+
+        <label>Teléfono:</label>
+        <input type="text" name="telefono" value="{{ cita.telefono }}" required>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+    <a class="volver" href="/admin_dashboard">Volver al panel</a>
+</div>
+
+</body>
+</html>
