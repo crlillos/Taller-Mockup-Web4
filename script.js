@@ -1,91 +1,301 @@
-
-const botonesNav = document.querySelectorAll('.nav-btn');
-const secciones = document.querySelectorAll('.seccion');
-
-botonesNav.forEach(boton => {
-    boton.addEventListener('click', () => {
-        const destino = boton.dataset.target;
-
-     
-        botonesNav.forEach(b => b.classList.remove('active'));
-        secciones.forEach(s => s.classList.remove('activa'));
-
-       
-        boton.classList.add('active');
-        document.getElementById(destino).classList.add('activa');
-
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-});
-
-document.getElementById("calcularBtn").addEventListener("click", () => {
-    const servicio = parseFloat(document.getElementById("servicio").value);
-    const horas = parseFloat(document.getElementById("horas").value);
-    const precioHora = parseFloat(document.getElementById("precioHora").value);
-
-    if (servicio === 0) {
-        alert("Selecciona un servicio válido");
-        return;
-    }
-
-    const total = servicio + (horas * precioHora);
-    document.getElementById("total").textContent = total.toFixed(2) + "€";
-});
-
-
-const observer = new IntersectionObserver((entries) => {
+const scrollObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
         }
     });
-}, { threshold: 0.2 });
+}, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-document.querySelectorAll(".blog-card").forEach(card => {
-    observer.observe(card);
-});
+const observeElements = () => {
+    document.querySelectorAll(".reveal").forEach(el => {
+        el.classList.remove("is-visible");
+        scrollObserver.observe(el);
+    });
+};
 
-function login(e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", observeElements);
 
-    document.getElementById("login-msg").textContent = "✔ Acceso correcto";
+const botonesNav = document.querySelectorAll('.nav-btn:not(.theme-btn)');
+const secciones = document.querySelectorAll('.seccion');
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navMenu = document.getElementById('nav-menu');
 
+if (mobileMenuBtn && navMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+    });
+}
+
+if (botonesNav.length > 0 && secciones.length > 0) {
+    botonesNav.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const destino = boton.dataset.target;
+            
+            if (!destino) return; 
+
+            botonesNav.forEach(b => b.classList.remove('active'));
+            secciones.forEach(s => s.classList.remove('activa'));
+
+            boton.classList.add('active');
+            const targetElement = document.getElementById(destino);
+            
+            if (targetElement) {
+                targetElement.classList.add('activa');
+                setTimeout(() => {
+                    targetElement.querySelectorAll('.reveal').forEach(el => {
+                        el.classList.remove("is-visible");
+                        scrollObserver.observe(el);
+                    });
+                }, 50);
+            }
+
+            if (navMenu.classList.contains('open')) {
+                navMenu.classList.remove('open');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+}
+
+const calcularBtn = document.getElementById("calcularBtn");
+const horasInput = document.getElementById("horas");
+const horasDisplay = document.getElementById("horas-display");
+
+if (horasInput && horasDisplay) {
+    horasInput.addEventListener("input", (e) => {
+        horasDisplay.textContent = e.target.value + " h";
+    });
+}
+
+if (calcularBtn) {
+    calcularBtn.addEventListener("click", () => {
+        const servicioElement = document.getElementById("servicio");
+        const precioHoraElement = document.getElementById("precioHora");
+
+        if (!servicioElement || !horasInput || !precioHoraElement) return;
+
+        const servicio = parseFloat(servicioElement.value);
+        const horas = parseFloat(horasInput.value);
+        const precioHora = parseFloat(precioHoraElement.value);
+
+        if (servicio === 0) {
+            alert("Selecciona un servicio válido para calcular.");
+            return;
+        }
+
+        const total = servicio + (horas * precioHora);
+        document.getElementById("total").textContent = total.toFixed(2) + " €";
+    });
+}
+
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+
+const sunIcon = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
+const moonIcon = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    if (themeIcon) themeIcon.innerHTML = moonIcon; 
+} else {
+    if (themeIcon) themeIcon.innerHTML = sunIcon;
+}
+
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        
+        if (currentTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
+            themeIcon.innerHTML = sunIcon;
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            themeIcon.innerHTML = moonIcon;
+        }
+    });
+}
+
+const toasts = document.querySelectorAll('.toast');
+if (toasts.length > 0) {
     setTimeout(() => {
-        window.location.href = "reserva.html";
-    }, 1000);
+        toasts.forEach(toast => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        });
+    }, 4000);
 }
 
-function reservar(e) {
-    e.preventDefault();
-
-    document.getElementById("reserva-msg").textContent = "✔ Cita reservada correctamente";
-
-    e.target.reset();
+const flipCards = document.querySelectorAll('.serv-card, .blog-card');
+if (flipCards.length > 0) {
+    flipCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+    });
 }
-document.addEventListener("DOMContentLoaded", () => {
 
-    const contenedor = document.getElementById("contenedorMensajes");
+const botonesCompletar = document.querySelectorAll('.btn-completar');
+if (botonesCompletar.length > 0) {
+    botonesCompletar.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const fila = e.target.closest('tr');
+            fila.classList.toggle('completada');
+            
+            if (fila.classList.contains('completada')) {
+                e.target.textContent = 'Deshacer';
+                e.target.classList.add('deshacer');
+            } else {
+                e.target.textContent = 'Completar';
+                e.target.classList.remove('deshacer');
+            }
+        });
+    });
+}
+/* =========================
+   CHATBOT IA
+========================= */
 
-    if (contenedor && contenedor.children.length === 0) {
-        const bienvenida = document.createElement("div");
-        bienvenida.className = "mensaje-bot";
-        bienvenida.innerText =
-            "🚗 Hola, soy el asistente del taller. ¿En qué puedo ayudarte?";
+const chatToggle = document.getElementById("chat-toggle");
+const chatWindow = document.getElementById("chat-window");
+const sendBtn = document.getElementById("send-btn");
+const chatInput = document.getElementById("chat-input");
+const chatMessages = document.getElementById("chat-messages");
 
-        contenedor.appendChild(bienvenida);
+/* ABRIR / CERRAR CHAT */
+
+if (chatToggle && chatWindow) {
+
+    chatToggle.addEventListener("click", () => {
+
+        chatWindow.classList.toggle("hidden");
+
+    });
+}
+
+/* CREAR MENSAJES */
+
+function addMessage(message, sender) {
+
+    const div = document.createElement("div");
+
+    div.classList.add(
+        sender === "user"
+            ? "user-message"
+            : "bot-message"
+    );
+
+    div.innerHTML = message;
+
+    chatMessages.appendChild(div);
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+}
+
+/* INDICADOR ESCRIBIENDO */
+
+function showTyping() {
+
+    const typing = document.createElement("div");
+
+    typing.classList.add("bot-message");
+
+    typing.id = "typing-indicator";
+
+    typing.innerHTML = "Escribiendo...";
+
+    chatMessages.appendChild(typing);
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+}
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById("typing-indicator");
+
+    if (typing) typing.remove();
+}
+
+/* ENVIAR MENSAJE */
+
+async function sendMessage() {
+
+    const message =
+        chatInput.value.trim();
+
+    if (!message) return;
+
+    addMessage(message, "user");
+
+    chatInput.value = "";
+
+    showTyping();
+
+    try {
+
+        const response = await fetch("/chat", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message
+            })
+
+        });
+
+        const data = await response.json();
+
+        removeTyping();
+
+        addMessage(data.reply, "bot");
+
+    } catch (error) {
+
+        removeTyping();
+
+        addMessage(
+            "⚠️ Error conectando con el servidor.",
+            "bot"
+        );
+
+        console.error(error);
     }
-});
-soporte_humano: {
-  mensaje: "Un asesor humano te contactará pronto.",
-  opciones: [
-    { texto: "Volver al inicio", siguiente_nodo: "inicio" }
-  ]
-},
+}
 
-catalogo_laptops: {
-  mensaje: "Tenemos Lenovo, ASUS y HP.",
-  opciones: [
-    { texto: "Volver", siguiente_nodo: "productos" }
-  ]
+/* BOTÓN ENVIAR */
+
+if (sendBtn) {
+
+    sendBtn.addEventListener(
+        "click",
+        sendMessage
+    );
+}
+
+/* ENTER */
+
+if (chatInput) {
+
+    chatInput.addEventListener(
+        "keypress",
+        (e) => {
+
+            if (e.key === "Enter") {
+
+                sendMessage();
+            }
+        }
+    );
 }
