@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Eliminación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-transition">
+
+<main style="padding-top: 120px; max-width: 600px; margin: 0 auto; text-align: center;">
+
+    <h2>¿Seguro que quieres eliminar esta cita?</h2>
+
+    <p><strong>Cliente:</strong> {{ cita.cliente }}</p>
+    <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+    <p><strong>Servicio:</strong> {{ cita.servicio }}</p>
+    <p><strong>Teléfono:</strong> {{ cita.telefono }}</p>
+
+    <div style="margin-top: 30px;">
+        <form action="/eliminar_cita/{{ cita.id }}" method="POST" style="display: inline-block;">
+            <button class="btn-eliminar" type="submit">Sí, eliminar</button>
+        </form>
+
+        <button class="btn-editar" onclick="window.location.href='/admin_dashboard'" style="margin-left: 15px;">
+            Cancelar
+        </button>
+    </div>
+
+</main>
+
+</body>
+</html>

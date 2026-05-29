@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva | MockUp</title>
+
+    <!-- CSS CORRECTO PARA FLASK -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+
+<div class="form-container">
+    <div class="logo" style="margin-bottom: 25px;">MOCK<span>UP</span></div>
+    <h2>Reserva tu cita</h2>
+
+    <form action="/reservas" method="POST">
+        <input type="text" name="nombre_cliente" placeholder="Nombre completo" required>
+        <input type="tel" name="telefono_cliente" placeholder="Teléfono" required>
+        <input type="date" name="fecha_cita" required>
+
+        <select name="tipo_servicio" required>
+            <option value="">Selecciona servicio</option>
+            <option value="Diagnóstico Avanzado">Diagnóstico Avanzado</option>
+            <option value="Mantenimiento Premium">Mantenimiento Premium</option>
+            <option value="Frenos y Suspensión">Frenos y Suspensión</option>
+            <option value="Reparación Compleja">Reparación Compleja</option>
+        </select>
+
+        <textarea name="descripcion_problema" placeholder="Describe el problema" required></textarea>
+
+        <button type="submit" class="btn btn-reserva btn-block">
+            Confirmar cita
+        </button>
+    </form>
+
+    <p id="reserva-msg"></p>
+    
+    <a href="/" class="volver-link">← Volver al inicio</a>
+</div>
+
+<!-- JS CORRECTO PARA MÓDULOS -->
+<script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="crud.js"></script>
+
+</body>
+</html>
