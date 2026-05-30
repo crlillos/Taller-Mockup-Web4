@@ -1,651 +1,269 @@
-# index.html completo
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mock up | Taller Mecánico Premium</title>
-
-    <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        body{
-            font-family:Arial, sans-serif;
-            background:#111;
-            color:white;
-        }
-
-        header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 40px;
-            background:#1b1b1b;
-            position:sticky;
-            top:0;
-            z-index:100;
-        }
-
-        .logo{
-            font-size:28px;
-            font-weight:bold;
-        }
-
-        .logo span{
-            color:#ff9800;
-        }
-
-        nav{
-            display:flex;
-            gap:10px;
-        }
-
-        .nav-btn{
-            padding:10px 16px;
-            border:none;
-            border-radius:10px;
-            background:#2a2a2a;
-            color:white;
-            cursor:pointer;
-        }
-
-        .hero{
-            padding:100px 20px;
-            text-align:center;
-            background:linear-gradient(135deg,#1a1a1a,#292929);
-        }
-
-        .hero h1{
-            font-size:52px;
-            margin-bottom:20px;
-        }
-
-        .hero p{
-            font-size:20px;
-            opacity:.8;
-            margin-bottom:30px;
-        }
-
-        .btn-hero{
-            padding:16px 28px;
-            border:none;
-            border-radius:14px;
-            background:linear-gradient(135deg,#ff9800,#ff6d00);
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-        }
-
-        .servicios-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-            gap:20px;
-            padding:60px 30px;
-        }
-
-        .serv-card{
-            background:#1e1e1e;
-            border-radius:18px;
-            overflow:hidden;
-        }
-
-        .serv-card img{
-            width:100%;
-            height:220px;
-            object-fit:cover;
-        }
-
-        .serv-card-content{
-            padding:20px;
-        }
-
-        .serv-card-content h3{
-            margin-bottom:10px;
-        }
-
-        footer{
-            padding:40px;
-            text-align:center;
-            background:#181818;
-            margin-top:60px;
-        }
-
-        /* ================= CHATBOT ================= */
-
-        #abrir-chat{
-
-            position:fixed;
-
-            bottom:20px;
-            right:20px;
-
-            display:flex;
-            align-items:center;
-            gap:10px;
-
-            padding:14px 18px;
-
-            border:none;
-            border-radius:50px;
-
-            background:linear-gradient(135deg,#ff9800,#ff6d00);
-
-            color:white;
-
-            font-size:16px;
-            font-weight:600;
-
-            cursor:pointer;
-
-            box-shadow:
-                0 10px 25px rgba(255,152,0,.35);
-
-            z-index:9999;
-
-            transition:
-                transform .25s ease,
-                box-shadow .25s ease,
-                background .25s ease;
-        }
-
-        #abrir-chat:hover{
-
-            transform:translateY(-4px);
-
-            box-shadow:
-                0 14px 35px rgba(255,152,0,.45);
-
-            background:
-                linear-gradient(135deg,#ffad33,#ff7b00);
-        }
-
-        #abrir-chat:active{
-
-            transform:scale(.96);
-
-        }
-
-        .chat-icon{
-
-            font-size:22px;
-
-        }
-
-        .chat-text{
-
-            white-space:nowrap;
-
-        }
-
-        #abrir-chat::after{
-
-            content:"";
-
-            position:absolute;
-
-            inset:0;
-
-            border-radius:50px;
-
-            border:2px solid rgba(255,152,0,.5);
-
-            animation:pulse 2s infinite;
-
-        }
-
-        @keyframes pulse{
-
-            0%{
-                transform:scale(1);
-                opacity:1;
-            }
-
-            70%{
-                transform:scale(1.15);
-                opacity:0;
-            }
-
-            100%{
-                transform:scale(1.15);
-                opacity:0;
-            }
-
-        }
-
-        #chatbot-container{
-
-            position:fixed;
-
-            bottom:95px;
-            right:20px;
-
-            width:360px;
-
-            background:#1e1e2f;
-
-            border-radius:18px;
-
-            overflow:hidden;
-
-            display:none;
-
-            box-shadow:
-                0 15px 40px rgba(0,0,0,.35);
-
-            z-index:9999;
-
-            animation:aparecer .3s ease;
-        }
-
-        @keyframes aparecer{
-
-            from{
-                opacity:0;
-                transform:translateY(20px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
-
-        }
-
-        .chat-header{
-
-            background:
-                linear-gradient(135deg,#ff9800,#ff6d00);
-
-            color:white;
-
-            padding:16px;
-
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-
-            font-weight:bold;
-
-            font-size:18px;
-        }
-
-        #cerrar-chat{
-
-            cursor:pointer;
-
-            font-size:18px;
-
-        }
-
-        #chat{
-
-            padding:15px;
-
-            max-height:350px;
-
-            overflow-y:auto;
-
-            color:white;
-
-            background:#1e1e2f;
-        }
-
-        .mensaje{
-
-            margin-bottom:15px;
-
-            line-height:1.5;
-
-            padding:12px;
-
-            border-radius:12px;
-
-            background:#2a2a40;
-        }
-
-        #opciones{
-
-            display:flex;
-
-            flex-direction:column;
-
-            gap:10px;
-
-            padding:15px;
-
-            background:#1a1a28;
-        }
-
-        #opciones button{
-
-            background:
-                linear-gradient(135deg,#ff9800,#f57c00);
-
-            color:white;
-
-            border:none;
-
-            border-radius:12px;
-
-            padding:12px;
-
-            font-size:15px;
-
-            cursor:pointer;
-
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
-
-            box-shadow:
-                0 4px 10px rgba(255,152,0,.25);
-        }
-
-        #opciones button:hover{
-
-            transform:translateY(-2px);
-
-            box-shadow:
-                0 8px 18px rgba(255,152,0,.4);
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller Mecánico</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#111827;
+}
+
+/* BOTÓN FLOTANTE */
+
+#abrir-chat{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:linear-gradient(135deg,#ff9800,#ff6d00);
+    color:white;
+    border:none;
+    border-radius:50px;
+    padding:14px 22px;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(255,152,0,.35);
+    z-index:9999;
+}
+
+/* CHAT */
+
+#chatbot-container{
+    position:fixed;
+    right:20px;
+    bottom:90px;
+    width:360px;
+    background:#1f2937;
+    border-radius:18px;
+    overflow:hidden;
+    display:none;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+/* HEADER */
+
+.chat-header{
+    background:linear-gradient(135deg,#ff9800,#ff6d00);
+    color:white;
+    padding:15px;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+#cerrar-chat{
+    cursor:pointer;
+}
+
+/* MENSAJES */
+
+#chat{
+    height:350px;
+    overflow-y:auto;
+    padding:15px;
+    color:white;
+}
+
+.mensaje{
+    margin-bottom:12px;
+    background:#374151;
+    padding:12px;
+    border-radius:12px;
+}
+
+/* INPUT */
+
+.chat-input{
+    display:flex;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.chat-input input{
+    flex:1;
+    border:none;
+    padding:14px;
+    outline:none;
+    background:#111827;
+    color:white;
+}
+
+.chat-input button{
+    border:none;
+    background:#ff9800;
+    color:white;
+    padding:0 18px;
+    cursor:pointer;
+}
+
+</style>
 </head>
 <body>
 
-<header>
-    <div class="logo">MOCK<span>UP</span></div>
+<button id="abrir-chat">🔧 TallerBot</button>
 
-    <nav>
-        <button class="nav-btn">Inicio</button>
-        <button class="nav-btn">Servicios</button>
-        <button class="nav-btn">Contacto</button>
-    </nav>
-</header>
-
-<section class="hero">
-
-    <h1>Mecánica de verdad, sin sorpresas.</h1>
-
-    <p>
-        Tu vehículo en manos expertas.
-        Tecnología, rapidez y transparencia total.
-    </p>
-
-    <button class="btn-hero">
-        Solicitar cita
-    </button>
-
-</section>
-
-<section class="servicios-grid">
-
-    <div class="serv-card">
-
-        <img src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=800">
-
-        <div class="serv-card-content">
-
-            <h3>Diagnóstico Avanzado</h3>
-
-            <p>
-                Equipos de última generación multimarca.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="serv-card">
-
-        <img src="https://images.pexels.com/photos/4489704/pexels-photo-4489704.jpeg?auto=compress&cs=tinysrgb&w=800">
-
-        <div class="serv-card-content">
-
-            <h3>Mantenimiento Premium</h3>
-
-            <p>
-                Aceite, filtros y revisión completa.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="serv-card">
-
-        <img src="https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=800">
-
-        <div class="serv-card-content">
-
-            <h3>Frenos y Suspensión</h3>
-
-            <p>
-                Seguridad total para tu vehículo.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-<footer>
-
-    <p>
-        © 2026 Mock Up Motor
-    </p>
-
-</footer>
-
-<!-- BOTÓN CHAT PREMIUM -->
-<button id="abrir-chat">
-
-    <span class="chat-icon">🔧</span>
-
-    <span class="chat-text">Asistente</span>
-
-</button>
-
-<!-- CHATBOT -->
 <div id="chatbot-container">
 
     <div class="chat-header">
-
         TallerBot
-
         <span id="cerrar-chat">✖</span>
-
     </div>
 
     <div id="chat"></div>
 
-    <div id="opciones"></div>
+    <div class="chat-input">
+        <input
+            type="text"
+            id="mensajeInput"
+            placeholder="Escribe tu consulta..."
+        >
+        <button id="enviarBtn">Enviar</button>
+    </div>
 
 </div>
 
 <script>
 
-const chatbot = {
+const chat = document.getElementById("chat");
+const input = document.getElementById("mensajeInput");
+const btn = document.getElementById("enviarBtn");
 
-    chatbot_name: "TallerBot",
+let respuestasBot = [];
 
-    flow: {
+/* ABRIR */
 
-        inicio: {
+document
+.getElementById("abrir-chat")
+.addEventListener("click",()=>{
 
-            mensaje:
-            "¡Hola! Bienvenido a nuestro taller mecánico. ¿Qué necesitas?",
+    document
+    .getElementById("chatbot-container")
+    .style.display="block";
 
-            opciones: [
+});
 
-                {
-                    texto: "Cambio de aceite",
-                    siguiente_nodo: "aceite"
-                },
+/* CERRAR */
 
-                {
-                    texto: "Revisión de frenos",
-                    siguiente_nodo: "frenos"
-                },
+document
+.getElementById("cerrar-chat")
+.addEventListener("click",()=>{
 
-                {
-                    texto: "Pedir cita",
-                    siguiente_nodo: "cita"
-                }
+    document
+    .getElementById("chatbot-container")
+    .style.display="none";
 
-            ]
-        },
+});
 
-        aceite: {
+/* CARGAR JSON */
 
-            mensaje:
-            "Realizamos cambios de aceite y filtros para todo tipo de vehículos.",
+fetch("respuestas.json")
+.then(response=>response.json())
+.then(data=>{
 
-            opciones: [
+    respuestasBot=data.respuestas;
 
-                {
-                    texto: "Pedir cita",
-                    siguiente_nodo: "cita"
-                },
+    agregarMensaje(
+        "TallerBot",
+        "¡Hola! Bienvenido al taller 🚗 ¿En qué puedo ayudarte?"
+    );
 
-                {
-                    texto: "Volver al inicio",
-                    siguiente_nodo: "inicio"
-                }
+});
 
-            ]
-        },
+/* PINTAR MENSAJE */
 
-        frenos: {
+function agregarMensaje(usuario,texto){
 
-            mensaje:
-            "Revisamos discos, pastillas y líquido de frenos.",
+    chat.innerHTML += `
+        <div class="mensaje">
+            <strong>${usuario}:</strong> ${texto}
+        </div>
+    `;
 
-            opciones: [
+    chat.scrollTop = chat.scrollHeight;
 
-                {
-                    texto: "Pedir cita",
-                    siguiente_nodo: "cita"
-                },
+}
 
-                {
-                    texto: "Volver al inicio",
-                    siguiente_nodo: "inicio"
-                }
+/* BUSCAR RESPUESTA */
 
-            ]
-        },
+function buscarRespuesta(texto){
 
-        cita: {
+    texto=texto.toLowerCase();
 
-            mensaje:
-            "Puedes llamarnos al 600 123 123 o escribirnos por WhatsApp.",
+    for(let item of respuestasBot){
 
-            opciones: [
+        for(let palabra of item.keywords){
 
-                {
-                    texto: "Menú principal",
-                    siguiente_nodo: "inicio"
-                }
+            if(texto.includes(palabra.toLowerCase())){
 
-            ]
+                return item.respuesta;
+
+            }
+
         }
 
     }
 
-};
-
-const chat = document.getElementById("chat");
-
-const opcionesDiv = document.getElementById("opciones");
-
-let nodoActual = "inicio";
-
-function renderNodo(nombreNodo){
-
-    const nodo = chatbot.flow[nombreNodo];
-
-    chat.innerHTML += `
-
-        <div class="mensaje">
-
-            <strong>${chatbot.chatbot_name}:</strong>
-
-            ${nodo.mensaje}
-
-        </div>
-
-    `;
-
-    opcionesDiv.innerHTML = "";
-
-    nodo.opciones.forEach(opcion => {
-
-        const btn = document.createElement("button");
-
-        btn.textContent = opcion.texto;
-
-        btn.onclick = () => {
-
-            chat.innerHTML += `
-
-                <div class="mensaje">
-
-                    <strong>Tú:</strong>
-
-                    ${opcion.texto}
-
-                </div>
-
-            `;
-
-            renderNodo(opcion.siguiente_nodo);
-
-            chat.scrollTop = chat.scrollHeight;
-        };
-
-        opcionesDiv.appendChild(btn);
-
-    });
+    return "No he entendido tu mensaje. Puedes escribir aceite, frenos, cita o presupuesto.";
 
 }
 
-/* ABRIR CHAT */
+/* ENVIAR */
 
-document
-.getElementById("abrir-chat")
-.addEventListener("click", () => {
+function enviarMensaje(){
 
-    document
-    .getElementById("chatbot-container")
-    .style.display = "block";
+    const texto=input.value.trim();
 
-});
+    if(texto==="") return;
 
-/* CERRAR CHAT */
+    agregarMensaje("Tú",texto);
 
-document
-.getElementById("cerrar-chat")
-.addEventListener("click", () => {
+    const respuesta=buscarRespuesta(texto);
 
-    document
-    .getElementById("chatbot-container")
-    .style.display = "none";
+    setTimeout(()=>{
 
-});
+        agregarMensaje(
+            "TallerBot",
+            respuesta
+        );
 
-renderNodo(nodoActual);
+    },500);
+
+    input.value="";
+
+}
+
+/* BOTÓN */
+
+btn.addEventListener(
+    "click",
+    enviarMensaje
+);
+
+/* ENTER */
+
+input.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key==="Enter"){
+
+            enviarMensaje();
+
+        }
+
+    }
+);
 
 </script>
 
 </body>
 </html>
-```

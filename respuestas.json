@@ -1,0 +1,24 @@
+{
+  "respuestas": [
+    {
+      "keywords": ["aceite", "cambio aceite", "lubricante"],
+      "respuesta": "Realizamos cambios de aceite y filtros para todo tipo de vehículos."
+    },
+    {
+      "keywords": ["frenos", "pastillas", "discos"],
+      "respuesta": "Revisamos frenos, discos y pastillas con revisión completa de seguridad."
+    },
+    {
+      "keywords": ["cita", "reservar", "reserva"],
+      "respuesta": "Puedes reservar tu cita llamándonos al 600 123 123 o por WhatsApp."
+    },
+    {
+      "keywords": ["precio", "presupuesto", "coste"],
+      "respuesta": "Te preparamos presupuesto sin compromiso según el trabajo que necesites."
+    },
+    {
+      "keywords": ["bateria", "arranque"],
+      "respuesta": "Podemos revisar batería, alternador y sistema de carga."
+    }
+  ]
+}
